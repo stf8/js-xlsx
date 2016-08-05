@@ -7601,7 +7601,9 @@ function write_ws_xml_merges(merges) {
 	for(var i = 0; i != merges.length; ++i) o += '<mergeCell ref="' + encode_range(merges[i]) + '"/>';
 	return o + '</mergeCells>';
 }
-
+function write_ws_xml_autofilter(autofilter) {
+	return writextag('autoFilter', null, { ref: encode_range(autofilter) });
+}
 function write_ws_xml_pagesetup(setup) {
   var pageSetup =  writextag('pageSetup', null, {
     scale: setup.scale || '100',
@@ -7854,6 +7856,7 @@ function write_ws_xml(idx, opts, wb) {
 	}
 	if(o.length>sidx+1) { o[o.length] = ('</sheetData>'); o[sidx]=o[sidx].replace("/>",">"); }
 
+	if (ws['!autoFilter'] !== undefined) o[o.length] = write_ws_xml_autofilter(ws['!autoFilter']);
 	if(ws['!merges'] !== undefined && ws['!merges'].length > 0) o[o.length] = (write_ws_xml_merges(ws['!merges']));
 
   if (ws['!pageSetup'] !== undefined) o[o.length] =  write_ws_xml_pagesetup(ws['!pageSetup']);
