@@ -8559,7 +8559,7 @@ function write_wb_xml(wb, opts) {
 	for(var i = 0; i != wb.SheetNames.length; ++i)
 		o[o.length] = (writextag('sheet',null,{name:wb.SheetNames[i].substr(0,31), sheetId:""+(i+1), "r:id":"rId"+(i+1)}));
 	o[o.length] = "</sheets>";
-
+	o[o.length] = writextag('calcPr',null, { fullCalcOnLoad: 1 });
   var hasPrintHeaders = false;
   for(var i = 0; i != wb.SheetNames.length; ++i) {
     var sheetName = wb.SheetNames[i];
